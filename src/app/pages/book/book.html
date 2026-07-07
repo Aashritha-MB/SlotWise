@@ -1,0 +1,140 @@
+<div class="book-container">
+
+  <!-- ── Success screen ────────────────────────────────── -->
+  @if (bookingComplete()) {
+    <div class="success-screen">
+      <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h1>Booking Received!</h1>
+        <p>Your booking is <strong>pending confirmation</strong>. We'll be in touch soon.</p>
+        <button id="book-again-btn" class="btn-primary" (click)="bookAgain()">
+          Book Another Slot
+        </button>
+      </div>
+    </div>
+  } @else {
+
+    <!-- ── Header ──────────────────────────────────────── -->
+    <header class="book-header">
+      <div class="header-brand">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">SlotWise</span>
+      </div>
+      <p class="header-sub">Select an available slot to make a booking</p>
+    </header>
+
+    <!-- ── Step 1: Slot selection ─────────────────────── -->
+    @if (!selectedSlot()) {
+      <section class="section">
+        <h2 class="section-title">Available Slots</h2>
+
+        @if (slots$ | async; as slots) {
+          @if (slots.length === 0) {
+            <div class="empty-state">
+              <p>No slots available at this time. Please check back later.</p>
+            </div>
+          } @else {
+            <div class="slots-grid">
+              @for (slot of slots; track slot.id) {
+                <button
+                  class="slot-card"
+                  [class.slot-card--full]="!isAvailable(slot)"
+                  [disabled]="!isAvailable(slot)"
+                  [id]="'slot-card-' + slot.id"
+                  (click)="selectSlot(slot)"
+                >
+                  <div class="slot-date">{{ slot.date }}</div>
+                  <div class="slot-time">{{ slot.time }}</div>
+                  <div class="slot-footer">
+                    @if (isAvailable(slot)) {
+                      <span class="badge badge-open">
+                        {{ seatsLeft(slot) }} seat{{ seatsLeft(slot) !== 1 ? 's' : '' }} left
+                      </span>
+                    } @else {
+                      <span class="badge badge-full">Full</span>
+                    }
+                  </div>
+                </button>
+              }
+            </div>
+          }
+        } @else {
+          <div class="loading-state">
+            <span class="spinner"></span>
+            <span>Loading slots…</span>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- ── Step 2: Booking form ───────────────────────── -->
+    @if (selectedSlot(); as slot) {
+      <section class="section">
+
+        <button class="back-btn" (click)="cancelSelection()">← Back to slots</button>
+
+        <h2 class="section-title">Complete Your Booking</h2>
+
+        <div class="selected-info">
+          <span>📅 {{ slot.date }}</span>
+          <span>🕐 {{ slot.time }}</span>
+          <span class="badge badge-open">
+            {{ seatsLeft(slot) }} seat{{ seatsLeft(slot) !== 1 ? 's' : '' }} left
+          </span>
+        </div>
+
+        <form class="booking-form" (ngSubmit)="submitBooking()" #bookForm="ngForm">
+
+          <div class="form-group">
+            <label for="customer-name">Full Name</label>
+            <input
+              id="customer-name"
+              type="text"
+              name="name"
+              [(ngModel)]="formName"
+              placeholder="Enter your full name"
+              required
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="customer-contact">Contact</label>
+            <input
+              id="customer-contact"
+              type="text"
+              name="contact"
+              [(ngModel)]="formContact"
+              placeholder="Phone number or email"
+              required
+              autocomplete="tel"
+            />
+          </div>
+
+          @if (errorMessage()) {
+            <div class="error-message" role="alert">
+              <span>⚠ {{ errorMessage() }}</span>
+            </div>
+          }
+
+          <button
+            id="confirm-booking-btn"
+            type="submit"
+            class="btn-primary"
+            [disabled]="isSubmitting() || !formName.trim() || !formContact.trim()"
+          >
+            @if (isSubmitting()) {
+              <span class="spinner"></span>
+              <span>Processing…</span>
+            } @else {
+              <span>Confirm Booking</span>
+            }
+          </button>
+
+        </form>
+      </section>
+    }
+
+  }
+
+</div>

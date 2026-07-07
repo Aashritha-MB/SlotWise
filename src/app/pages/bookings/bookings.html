@@ -1,0 +1,98 @@
+<div class="bookings-container">
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="bookings-header">
+    <div class="header-left">
+      <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+      <h1 class="page-title">Manage Bookings</h1>
+    </div>
+  </header>
+
+  <!-- ── Bookings Table ──────────────────────────────────── -->
+  <div class="table-panel">
+    @if (rows$ | async; as rows) {
+      @if (rows.length === 0) {
+        <div class="empty-state">
+          <p>No bookings yet. They will appear here in real time once customers book.</p>
+        </div>
+      } @else {
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Contact</th>
+              <th>Slot Date</th>
+              <th>Slot Time</th>
+              <th>Status</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of rows; track row.booking.id) {
+              <tr>
+
+                <!-- Name -->
+                <td class="cell-name">{{ row.booking.name }}</td>
+
+                <!-- Contact -->
+                <td class="cell-contact">{{ row.booking.contact }}</td>
+
+                <!-- Slot Date -->
+                <td class="cell-slot-date">
+                  {{ row.slot ? row.slot.date : '—' }}
+                </td>
+
+                <!-- Slot Time -->
+                <td class="cell-slot-time">
+                  {{ row.slot ? row.slot.time : '—' }}
+                </td>
+
+                <!-- Status badge -->
+                <td>
+                  <span [class]="'badge badge-' + row.booking.status">
+                    {{ row.booking.status }}
+                  </span>
+                </td>
+
+                <!-- Action buttons -->
+                <td class="actions-cell">
+                  @if (isUpdating(row.booking.id)) {
+                    <span class="spinner"></span>
+                  } @else {
+                    <button
+                      [id]="'confirm-btn-' + row.booking.id"
+                      class="action-btn action-btn--confirm"
+                      [disabled]="row.booking.status === 'confirmed'"
+                      (click)="setStatus(row.booking.id, 'confirmed')"
+                    >✓ Confirm</button>
+
+                    <button
+                      [id]="'cancel-btn-' + row.booking.id"
+                      class="action-btn action-btn--cancel"
+                      [disabled]="row.booking.status === 'cancelled'"
+                      (click)="setStatus(row.booking.id, 'cancelled')"
+                    >✗ Cancel</button>
+
+                    <button
+                      [id]="'pending-btn-' + row.booking.id"
+                      class="action-btn action-btn--pending"
+                      [disabled]="row.booking.status === 'pending'"
+                      (click)="setStatus(row.booking.id, 'pending')"
+                    >↺ Pending</button>
+                  }
+                </td>
+
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    } @else {
+      <div class="loading-state">
+        <span class="spinner"></span>
+        <span>Loading bookings…</span>
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+
+  <header class="dashboard-header">
+    <div class="header-brand">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">SlotWise</span>
+    </div>
+    <button id="logout-btn" class="logout-btn" (click)="logout()">
+      Sign Out
+    </button>
+  </header>
+
+  <main class="dashboard-main">
+    <h1>Dashboard</h1>
+    <p>Welcome to SlotWise. Manage your resources below.</p>
+
+    <div class="dashboard-cards">
+      <a id="manage-slots-card" routerLink="/slots" class="dashboard-card">
+        <span class="card-icon">🗓</span>
+        <div class="card-info">
+          <span class="card-title">Manage Slots</span>
+          <span class="card-desc">Create, edit and delete time slots</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a id="customer-booking-card" routerLink="/book" class="dashboard-card">
+        <span class="card-icon">🎟</span>
+        <div class="card-info">
+          <span class="card-title">Customer Booking</span>
+          <span class="card-desc">View the public booking page</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+      <a id="manage-bookings-card" routerLink="/bookings" class="dashboard-card">
+        <span class="card-icon">📋</span>
+        <div class="card-info">
+          <span class="card-title">Manage Bookings</span>
+          <span class="card-desc">View and update all customer bookings</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+  </main>
+
+</div>

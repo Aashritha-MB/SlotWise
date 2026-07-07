@@ -1,0 +1,144 @@
+<div class="slots-container">
+
+  <!-- ── Header ─────────────────────────────────────── -->
+  <header class="slots-header">
+    <div class="header-left">
+      <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+      <h1 class="page-title">Manage Slots</h1>
+    </div>
+    @if (!showForm()) {
+      <button id="add-slot-btn" class="btn-primary" (click)="openCreateForm()">
+        + Add Slot
+      </button>
+    }
+  </header>
+
+  <!-- ── Create / Edit Form Panel ───────────────────── -->
+  @if (showForm()) {
+    <div class="form-panel">
+      <h2 class="form-title">{{ editingSlot() ? 'Edit Slot' : 'New Slot' }}</h2>
+
+      <form class="slot-form" (ngSubmit)="submitForm()" #slotForm="ngForm">
+        <div class="form-row">
+
+          <div class="form-group">
+            <label for="slot-date">Date</label>
+            <input
+              id="slot-date"
+              type="date"
+              name="date"
+              [(ngModel)]="formDate"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="slot-time">Time</label>
+            <input
+              id="slot-time"
+              type="time"
+              name="time"
+              [(ngModel)]="formTime"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="slot-capacity">Capacity</label>
+            <input
+              id="slot-capacity"
+              type="number"
+              name="capacity"
+              [(ngModel)]="formCapacity"
+              min="1"
+              required
+            />
+          </div>
+
+        </div>
+
+        @if (errorMessage()) {
+          <div class="error-message" role="alert">
+            <span>⚠ {{ errorMessage() }}</span>
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="button" class="btn-ghost" (click)="cancelForm()">
+            Cancel
+          </button>
+          <button
+            id="slot-submit-btn"
+            type="submit"
+            class="btn-primary"
+            [disabled]="isSubmitting() || !formDate || !formTime || formCapacity < 1"
+          >
+            @if (isSubmitting()) {
+              <span class="spinner"></span>
+              <span>Saving…</span>
+            } @else {
+              <span>{{ editingSlot() ? 'Save Changes' : 'Create Slot' }}</span>
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- ── Slots Table ─────────────────────────────────── -->
+  <div class="table-panel">
+    @if (slots$ | async; as slots) {
+      @if (slots.length === 0) {
+        <div class="empty-state">
+          <p>No slots yet. Click <strong>+ Add Slot</strong> to get started.</p>
+        </div>
+      } @else {
+        <table class="slot-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Capacity</th>
+              <th>Booked</th>
+              <th>Available</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (slot of slots; track slot.id) {
+              <tr>
+                <td>{{ slot.date }}</td>
+                <td>{{ slot.time }}</td>
+                <td>{{ slot.capacity }}</td>
+                <td>{{ slot.booked }}</td>
+                <td>
+                  <span [class]="available(slot) === 0 ? 'badge badge-full' : 'badge badge-open'">
+                    {{ available(slot) }}
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  <button
+                    class="btn-edit"
+                    [id]="'edit-btn-' + slot.id"
+                    (click)="openEditForm(slot)"
+                  >Edit</button>
+                  <button
+                    class="btn-delete"
+                    [id]="'delete-btn-' + slot.id"
+                    (click)="deleteSlot(slot.id)"
+                  >Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    } @else {
+      <div class="loading-state">
+        <span class="spinner"></span>
+        <span>Loading slots…</span>
+      </div>
+    }
+  </div>
+
+</div>

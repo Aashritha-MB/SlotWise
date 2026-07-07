@@ -1,59 +1,232 @@
-# Slotwise
+# SlotWise – Appointment Booking System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.5.
+## 📌 Overview
 
-## Development server
+SlotWise is a full-stack appointment booking web application built using **Angular** and **Firebase**. It allows administrators to create and manage appointment slots while enabling customers to book available slots through a simple and responsive interface.
 
-To start a local development server, run:
+The application uses **Firebase Authentication** for secure admin login, **Cloud Firestore** for real-time database operations, and **Firebase Hosting** for deployment.
+
+---
+
+## 🚀 Live Demo
+
+**Application URL:**
+https://slotwise-b3ed9.web.app/
+
+---
+
+## ✨ Features
+
+### 🔐 Admin Authentication
+
+* Secure Firebase Email & Password Authentication
+* Protected dashboard using Angular Route Guards
+* Admin login and logout functionality
+
+### 📅 Slot Management
+
+* Create new appointment slots
+* Edit existing slots
+* Delete slots
+* View slot capacity and booked count
+* Real-time updates using Cloud Firestore
+
+### 👥 Customer Booking
+
+* Public booking page (no login required)
+* View available appointment slots
+* Book a slot using customer name and contact number
+* Prevent overbooking using Firestore Transactions
+
+### 📋 Booking Management
+
+* View all customer bookings
+* Display appointment date and time
+* Update booking status:
+
+  * Pending
+  * Confirmed
+  * Cancelled
+* Real-time booking updates
+
+### ☁ Firebase Integration
+
+* Firebase Authentication
+* Cloud Firestore Database
+* Firebase Hosting
+* Real-time synchronization
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+* Angular
+* TypeScript
+* HTML5
+* CSS3
+
+## Backend
+
+* Firebase Authentication
+* Cloud Firestore
+* Firebase Hosting
+
+## Tools
+
+* Visual Studio Code
+* Git
+* GitHub
+* Firebase CLI
+
+---
+
+# 📂 Project Structure
+
+```
+src/
+│
+├── app/
+│   ├── guards/
+│   ├── models/
+│   ├── pages/
+│   │   ├── login/
+│   │   ├── dashboard/
+│   │   ├── slots/
+│   │   ├── book/
+│   │   └── bookings/
+│   │
+│   ├── services/
+│   └── app.routes.ts
+│
+├── firebase.config.ts
+└── main.ts
+```
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/SlotWise.git
+```
+
+## 2. Move into the Project
+
+```bash
+cd SlotWise
+```
+
+## 3. Install Dependencies
+
+```bash
+npm install
+```
+
+## 4. Run the Application
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser and visit:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+# 🔥 Firebase Configuration
+
+Create a Firebase project and enable:
+
+* Authentication (Email/Password)
+* Cloud Firestore
+* Firebase Hosting
+
+Update your Firebase configuration inside:
+
+```
+src/firebase.config.ts
 ```
 
-## Building
+---
 
-To build the project run:
+# 🚀 Build for Production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+# 🌐 Deploy to Firebase
 
 ```bash
-ng test
+firebase deploy
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+# 👨‍💻 User Flow
 
-```bash
-ng e2e
+```
+Admin Login
+      │
+      ▼
+Dashboard
+      │
+      ├──────────────► Manage Slots
+      │                   │
+      │                   ├── Create Slot
+      │                   ├── Edit Slot
+      │                   └── Delete Slot
+      │
+      ├──────────────► Customer Booking
+      │                   │
+      │                   ├── View Available Slots
+      │                   ├── Select Slot
+      │                   └── Book Appointment
+      │
+      └──────────────► Manage Bookings
+                          │
+                          ├── View Bookings
+                          ├── Confirm Booking
+                          ├── Cancel Booking
+                          └── Mark as Pending
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+# 📈 Future Improvements
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* Email confirmation for bookings
+* Search and filter bookings
+* Booking history
+* Calendar view
+* Admin analytics dashboard
+* Export bookings to Excel/PDF
+* Customer booking cancellation
+* Responsive mobile optimization
+
+---
+
+# 📚 Learning Outcomes
+
+This project demonstrates knowledge of:
+
+* Angular Standalone Components
+* Angular Routing
+* Angular Route Guards
+* TypeScript
+* Firebase Authentication
+* Cloud Firestore
+* Firestore Transactions
+* CRUD Operations
+* Real-time Data Synchronization
+* Firebase Hosting
+* Git & GitHub
+

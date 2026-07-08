@@ -91,10 +91,6 @@ https://slotwise-b3ed9.web.app/
 
 ## 📂 Project Structure
 
-## 📂 Project Structure
-
-## 📂 Project Structure
-
 ```text
 SlotWise/
 ├── src/

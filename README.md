@@ -1,236 +1,292 @@
-Here is your complete, polished README file with the duplication removed, formatting cleaned up, and technical depth added to highlight your use of Firestore Transactions.
-
-Replace the entire contents of your current `README.md` file with this text:
-
-```markdown
 # SlotWise – Appointment Booking System
 
 ## 📌 Overview
 
-SlotWise is a full-stack appointment booking web application built using **Angular** and **Firebase**. It allows administrators to create and manage appointment slots while enabling customers to book available slots through a simple and responsive interface.
+SlotWise is a full-stack appointment booking web application built using **Angular**, **TypeScript**, and **Firebase**. It enables administrators to create and manage appointment slots while allowing customers to reserve available slots through a simple, responsive interface.
 
-The application uses **Firebase Authentication** for secure admin login, **Cloud Firestore** for real-time database operations, and **Firebase Hosting** for deployment.
+The application integrates **Firebase Authentication** for secure admin login, **Cloud Firestore** for real-time data storage, and **Firebase Hosting** for deployment. Firestore transactions are used during booking to prevent overbooking and ensure data consistency.
 
 ---
 
 ## 🚀 Live Demo
 
-**Application URL:** 
+**Application URL:**  
 https://slotwise-b3ed9.web.app/
 
 ---
 
-## 🔐 Login Credentials
+## 🔐 Admin Login Credentials
 
-* **Email:** `admin@slotwise.com`
-* **Password:** `Password123`
+> **Email:** `admin@slotwise.com`  
+> **Password:** `Password123`
 
 ---
 
 ## ✨ Features
 
 ### 🔐 Admin Authentication
-* Secure Firebase Email & Password Authentication
-* Protected dashboard using Angular Route Guards
-* Admin login and logout functionality
+
+- Secure Email & Password Authentication using Firebase Auth
+- Protected admin dashboard with Angular Route Guards
+- Admin login and logout functionality
 
 ### 📅 Slot Management
-* Create new appointment slots (Date, Time, Capacity)
-* Edit existing slots
-* Delete slots
-* View slot capacity and booked count in real time
-* Real-time updates using Cloud Firestore snapshot listeners
+
+- Create appointment slots
+- Edit existing slots
+- Delete slots
+- Configure slot capacity
+- View booked and available seats
+- Real-time Firestore updates
 
 ### 👥 Customer Booking
-* Public booking page (no authentication required)
-* View available appointment slots
-* Book a slot using customer name and contact number
-* **Overbooking Prevention:** Uses atomicity via Firestore Transactions to safely verify available capacity and increment the booked count before committing a booking document.
+
+- Public booking page (no login required)
+- View available appointment slots
+- Reserve a slot using customer name and contact number
+- Prevent overbooking using **Firestore Transactions**
+- Automatic booked count update
 
 ### 📋 Booking Management
-* View all customer bookings on an administrative dashboard
-* Display appointment date and time details
-* Update booking status in real time:
-  * Pending
-  * Confirmed
-  * Cancelled
+
+- View all bookings in real time
+- Display booking date and time
+- Update booking status:
+  - Pending
+  - Confirmed
+  - Cancelled
 
 ### ☁ Firebase Integration
-* Firebase Authentication
-* Cloud Firestore Database
-* Firebase Hosting
-* Real-time data synchronization across all clients
+
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Hosting
+- Real-time synchronization across clients
 
 ---
 
-# 🛠 Tech Stack
+## 🛠 Tech Stack
 
-## Frontend
-* Angular (Strict Mode enabled)
-* TypeScript
-* HTML5 / CSS3
+### Frontend
 
-## Backend
-* Firebase Authentication
-* Cloud Firestore
-* Firebase Hosting
+- Angular (Standalone Components)
+- TypeScript (Strict Mode)
+- HTML5
+- CSS3
 
-## Tools
-* Visual Studio Code
-* Git & GitHub
-* Firebase CLI
+### Backend
+
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Hosting
+
+### Development Tools
+
+- Visual Studio Code
+- Git
+- GitHub
+- Firebase CLI
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
+## 📂 Project Structure
 
+## 📂 Project Structure
+
+```text
+SlotWise/
+├── src/
+│   ├── app/
+│   │   ├── guards/
+│   │   ├── models/
+│   │   ├── pages/
+│   │   │   ├── login/
+│   │   │   ├── dashboard/
+│   │   │   ├── slots/
+│   │   │   ├── book/
+│   │   │   └── bookings/
+│   │   ├── services/
+│   │   └── app.routes.ts
+│   ├── firebase.config.ts
+│   └── main.ts
+├── docs/
+├── public/
+├── angular.json
+├── firebase.json
+├── package.json
+└── README.md
 ```
 
-src/
-│
-├── app/
-│   ├── guards/       # Route guards for admin dashboard authorization
-│   ├── models/       # TypeScript interfaces for Slots and Bookings
-│   ├── pages/
-│   │   ├── login/      # Admin authentication page
-│   │   ├── dashboard/  # Admin main entry panel
-│   │   ├── slots/      # Slot creation & management workspace
-│   │   ├── book/       # Public facing client reservation view
-│   │   └── bookings/   # Admin list and management of client bookings
-│   │
-│   ├── services/     # Firebase Auth and Firestore data access layers
-│   └── app.routes.ts # Application routing configuration
-│
-├── firebase.config.ts
-└── main.ts
+### Directory Description
 
-```
+| Path | Purpose |
+|------|---------|
+| `src/app/guards/` | Route guards to protect admin routes using Firebase Authentication |
+| `src/app/models/` | TypeScript interfaces for Slot and Booking data models |
+| `src/app/pages/login/` | Admin login page |
+| `src/app/pages/dashboard/` | Admin dashboard after authentication |
+| `src/app/pages/slots/` | Create, edit and delete appointment slots |
+| `src/app/pages/book/` | Public customer booking page |
+| `src/app/pages/bookings/` | View and manage customer bookings |
+| `src/app/services/` | Firebase Authentication and Firestore services |
+| `src/app/app.routes.ts` | Angular application routing |
+| `src/firebase.config.ts` | Firebase project configuration |
+| `docs/` | Assignment PDF documents (Part 2, Part 3 and Part 4) |
+| `public/` | Static assets |
+| `firebase.json` | Firebase Hosting configuration |
+| `package.json` | Project dependencies and scripts |
+| `README.md` | Project documentation |
+
 ## 📄 Assignment Documents
 
-The written components of this assignment are available in the `docs` folder.
+The written components of the assignment are available in the **docs** folder.
 
-- **Part 2:** `docs/Part2_Written_Explanation.pdf`
-- **Part 3:** `docs/Part3_Site_Critique.pdf`
-- **Part 4:** `docs/Part4_Reflection.pdf`
+- **Part 2:** Written Explanation
+- **Part 3:** Site Critique
+- **Part 4:** Reflection
+
 ---
 
-# ⚙️ Installation & Setup
+## ⚙️ Installation & Setup
 
-## 1. Clone the Repository
+### 1. Clone the Repository
+
 ```bash
-git clone [https://github.com/Aashritha-MB/SlotWise.git](https://github.com/Aashritha-MB/SlotWise.git)
-
+git clone https://github.com/Aashritha-MB/SlotWise.git
 ```
 
-## 2. Move into the Project
+### 2. Navigate to the Project
 
 ```bash
 cd SlotWise
-
 ```
 
-## 3. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 npm install
-
 ```
 
-## 4. Run the Application Locally
+### 4. Run the Development Server
 
 ```bash
 ng serve
-
 ```
 
-Navigate to `http://localhost:4200/` in your browser.
+Open your browser:
+
+```text
+http://localhost:4200
+```
 
 ---
 
-# 🔥 Firebase Configuration
+## 🔥 Firebase Configuration
 
-To configure your own backend environment, create a Firebase project in the Firebase Console and enable:
+Create a Firebase project and enable:
 
-* Authentication (Email/Password provider)
-* Cloud Firestore
-* Firebase Hosting
+- Firebase Authentication (Email & Password)
+- Cloud Firestore
+- Firebase Hosting
 
-Update the environment settings inside your local configuration file:
+Update your Firebase configuration inside:
 
-```
+```text
 src/firebase.config.ts
-
 ```
 
 ---
 
-# 🚀 Build & Deployment
+## 🚀 Build & Deployment
 
-## Build for Production
+### Build the Project
 
 ```bash
 ng build
-
 ```
 
-## Deploy to Firebase
+### Deploy to Firebase Hosting
 
 ```bash
 firebase deploy
-
 ```
 
 ---
 
-# 👨‍💻 User Flow
+## 👨‍💻 Application Workflow
 
-```
-Admin Login
-     │
-     ▼
-Dashboard
-     │
-     ├──────────────► Manage Slots
-     │                   │
-     │                   ├── Create Slot
-     │                   ├── Edit Slot
-     │                   └── Delete Slot
-     │
-     ├──────────────► Customer Booking
-     │                   │
-     │                   ├── View Available Slots
-     │                   ├── Select Slot
-     │                   └── Book Appointment (Atomic Transaction Check)
-     │
-     └──────────────► Manage Bookings
-                         │
-                         ├── View Bookings
-                         ├── Confirm Booking
-                         ├── Cancel Booking
-                         └── Mark as Pending
-
+```text
+                 Admin Login
+                      │
+                      ▼
+                 Admin Dashboard
+                      │
+      ┌───────────────┼────────────────┐
+      │               │                │
+      ▼               ▼                ▼
+Manage Slots     Customer Booking   Manage Bookings
+      │               │                │
+      │               │                │
+ Create Slot      Select Slot      View Bookings
+ Edit Slot        Enter Details    Confirm Booking
+ Delete Slot      Book Slot        Cancel Booking
+      │               │            Pending Booking
+      │               │
+      │               ▼
+      │      Firestore Transaction
+      │               │
+      │      Check Capacity
+      │               │
+      │      Increment Booked Count
+      │               │
+      └──────────────►Save Booking
 ```
 
 ---
 
-# 📈 Future Improvements
+## 🔒 Firestore Transaction Safety
 
-* Automated email/SMS confirmations for customers upon status changes.
-* Customer-side cancellation links inside confirmation notifications.
-* Paginated queries and server-side data infinite scrolling for handling high booking volumes.
+To prevent overbooking, SlotWise uses a **Firestore Transaction** during the booking process.
+
+The transaction performs the following steps atomically:
+
+1. Reads the selected slot.
+2. Checks whether the slot has available capacity.
+3. Stops the booking if the slot is already full.
+4. Increments the booked count.
+5. Creates the booking document.
+
+This guarantees that multiple users cannot reserve the final available seat simultaneously.
 
 ---
 
-# 📚 Learning Outcomes
+## 📈 Future Improvements
 
-This project demonstrates core competencies across the modern full-stack web ecosystem:
+- Email confirmation after booking
+- SMS notifications
+- Export bookings to Excel/PDF
+- Analytics dashboard
 
-* **Angular Standalone Architecture:** Designing modular components without boilerplate NgModules.
-* **Strict TypeScript Type Safety:** Guaranteeing interface structure and zero implicitly-typed `any` elements.
-* **NoSQL Transactional Integrity:** Handling race conditions and data mutations using atomicity via Firestore Transactions.
-* **Real-time Synchronization:** Building asynchronous, reactive UI elements tied to continuous database document updates using RxJS streams.
+---
 
-```
+## 📚 Learning Outcomes
 
-```
+This project demonstrates practical experience with:
+
+- Angular Standalone Components
+- Angular Routing
+- Route Guards
+- TypeScript Strict Mode
+- Firebase Authentication
+- Cloud Firestore CRUD Operations
+- Firestore Transactions
+- RxJS Observables
+- Real-time Data Synchronization
+- Firebase Hosting
+- Git & GitHub
+
+---
+
+

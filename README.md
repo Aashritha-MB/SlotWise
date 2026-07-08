@@ -106,7 +106,13 @@ src/
 └── main.ts
 
 ```
+## 📄 Assignment Documents
 
+The written components of this assignment are available in the `docs` folder.
+
+- **Part 2:** `docs/Part2_Written_Explanation.pdf`
+- **Part 3:** `docs/Part3_Site_Critique.pdf`
+- **Part 4:** `docs/Part4_Reflection.pdf`
 ---
 
 # ⚙️ Installation & Setup

@@ -15,6 +15,11 @@ https://slotwise-b3ed9.web.app/
 
 ---
 
+## Login Credentials
+Email: admin@slotwise.com
+
+Password: Password123
+
 ## ✨ Features
 
 ### 🔐 Admin Authentication
@@ -111,7 +116,7 @@ src/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SlotWise.git
+git clone https://github.com/Aashritha-MB/SlotWise.git
 ```
 
 ## 2. Move into the Project
@@ -131,14 +136,6 @@ npm install
 ```bash
 ng serve
 ```
-
-Open your browser and visit:
-
-```
-http://localhost:4200
-```
-
----
 
 # 🔥 Firebase Configuration
 
@@ -204,15 +201,8 @@ Dashboard
 # 📈 Future Improvements
 
 * Email confirmation for bookings
-* Search and filter bookings
-* Booking history
-* Calendar view
-* Admin analytics dashboard
-* Export bookings to Excel/PDF
 * Customer booking cancellation
-* Responsive mobile optimization
 
----
 
 # 📚 Learning Outcomes
 

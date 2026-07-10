@@ -3,7 +3,7 @@
   <!-- ── Header ─────────────────────────────────────────── -->
   <header class="bookings-header">
     <div class="header-left">
-      <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+      <button id="back-btn" class="back-link" (click)="goBack()">← Back</button>
       <h1 class="page-title">Manage Bookings</h1>
     </div>
   </header>
@@ -24,7 +24,7 @@
               <th>Slot Date</th>
               <th>Slot Time</th>
               <th>Status</th>
-              <th>Update Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@
 
                 <!-- Action buttons -->
                 <td class="actions-cell">
-                  @if (isUpdating(row.booking.id)) {
+                  @if (isUpdating(row.booking.id) || isDeleting(row.booking.id)) {
                     <span class="spinner"></span>
                   } @else {
                     <button
@@ -79,6 +79,12 @@
                       [disabled]="row.booking.status === 'pending'"
                       (click)="setStatus(row.booking.id, 'pending')"
                     >↺ Pending</button>
+
+                    <button
+                      [id]="'delete-btn-' + row.booking.id"
+                      class="action-btn action-btn--delete"
+                      (click)="deleteBooking(row)"
+                    >🗑 Delete</button>
                   }
                 </td>
 

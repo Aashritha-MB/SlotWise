@@ -220,6 +220,13 @@
   font-size: 0.875rem;
 }
 
+/* Inline field-level validation hint */
+.field-error {
+  font-size: 0.78rem;
+  color: #fca5a5;
+  margin-top: 0.2rem;
+}
+
 /* ── Success screen ───────────────────────────────────── */
 .success-screen {
   display: flex;

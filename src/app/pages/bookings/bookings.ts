@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { AsyncPipe, Location } from '@angular/common';
+
 import { combineLatest, map, Observable } from 'rxjs';
 import { BookingService } from '../../services/booking.service';
 import { SlotService } from '../../services/slot.service';
@@ -17,13 +17,16 @@ export interface BookingRow {
 @Component({
   selector: 'app-bookings',
   standalone: true,
-  imports: [AsyncPipe, RouterLink],
+  imports: [AsyncPipe],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
 })
 export class Bookings {
   private readonly bookingService = inject(BookingService);
   private readonly slotService    = inject(SlotService);
+  private readonly location       = inject(Location);
+
+  goBack(): void { this.location.back(); }
 
   /**
    * Combines two real-time Firestore streams into a single enriched list.
@@ -45,8 +48,11 @@ export class Bookings {
     })
   );
 
-  /** Tracks which booking ID is currently being updated */
+  /** Tracks which booking ID is currently being updated (status change) */
   updatingId = signal<string | null>(null);
+
+  /** Tracks which booking ID is currently being deleted */
+  deletingId = signal<string | null>(null);
 
   async setStatus(id: string, status: BookingStatus): Promise<void> {
     this.updatingId.set(id);
@@ -57,7 +63,29 @@ export class Bookings {
     }
   }
 
+  /**
+   * Asks for confirmation then atomically deletes the booking and
+   * decrements the parent slot's booked count via a Firestore Transaction.
+   */
+  async deleteBooking(row: BookingRow): Promise<void> {
+    if (!confirm('Are you sure you want to delete this booking?')) return;
+
+    this.deletingId.set(row.booking.id);
+    try {
+      await this.bookingService.deleteWithSlotDecrement(
+        row.booking.id,
+        row.booking.slotId,
+      );
+    } finally {
+      this.deletingId.set(null);
+    }
+  }
+
   isUpdating(id: string): boolean {
     return this.updatingId() === id;
+  }
+
+  isDeleting(id: string): boolean {
+    return this.deletingId() === id;
   }
 }

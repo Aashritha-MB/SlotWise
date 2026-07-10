@@ -8,6 +8,7 @@ import {
   onSnapshot,
   query,
   where,
+  runTransaction,
   DocumentReference,
   DocumentData,
   CollectionReference,
@@ -133,5 +134,41 @@ export class BookingService {
   async delete(id: string): Promise<void> {
     const docRef: DocumentReference<DocumentData> = doc(db, COLLECTION, id);
     await deleteDoc(docRef);
+  }
+
+  /**
+   * Atomically deletes a booking and decrements the parent slot's booked count.
+   *
+   * Uses a Firestore Transaction so both operations either succeed together
+   * or both fail — the booking list and slot availability never drift apart.
+   * The booked count is floored at 0 to prevent it going negative.
+   *
+   * @param bookingId - Firestore document ID of the booking to delete.
+   * @param slotId    - Firestore document ID of the parent slot.
+   */
+  async deleteWithSlotDecrement(
+    bookingId: string,
+    slotId:    string,
+  ): Promise<void> {
+    const bookingRef: DocumentReference<DocumentData> = doc(db, COLLECTION, bookingId);
+    const slotRef:    DocumentReference<DocumentData> = doc(db, 'slots',    slotId);
+
+    await runTransaction(db, async (tx) => {
+      const slotSnap = await tx.get(slotRef);
+
+      // Determine the current booked count; default to 0 if the slot is gone
+      const currentBooked: number =
+        slotSnap.exists()
+          ? ((slotSnap.data()['booked'] as number) ?? 0)
+          : 0;
+
+      // Delete the booking document
+      tx.delete(bookingRef);
+
+      // Decrement slot.booked — never below 0
+      if (slotSnap.exists()) {
+        tx.update(slotRef, { booked: Math.max(0, currentBooked - 1) });
+      }
+    });
   }
 }

@@ -3,7 +3,7 @@
   <!-- ── Header ─────────────────────────────────────── -->
   <header class="slots-header">
     <div class="header-left">
-      <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+      <button id="back-btn" class="back-link" (click)="goBack()">← Back</button>
       <h1 class="page-title">Manage Slots</h1>
     </div>
     @if (!showForm()) {
@@ -28,6 +28,7 @@
               type="date"
               name="date"
               [(ngModel)]="formDate"
+              [min]="todayStr"
               required
             />
           </div>
@@ -39,6 +40,7 @@
               type="time"
               name="time"
               [(ngModel)]="formTime"
+              [min]="minTimeForDate"
               required
             />
           </div>

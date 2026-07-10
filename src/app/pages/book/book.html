@@ -16,6 +16,7 @@
 
     <!-- ── Header ──────────────────────────────────────── -->
     <header class="book-header">
+      <button id="back-btn" class="back-btn" (click)="goBack()">← Back</button>
       <div class="header-brand">
         <span class="logo-icon">⚡</span>
         <span class="logo-text">SlotWise</span>
@@ -36,25 +37,27 @@
           } @else {
             <div class="slots-grid">
               @for (slot of slots; track slot.id) {
-                <button
-                  class="slot-card"
-                  [class.slot-card--full]="!isAvailable(slot)"
-                  [disabled]="!isAvailable(slot)"
-                  [id]="'slot-card-' + slot.id"
-                  (click)="selectSlot(slot)"
-                >
-                  <div class="slot-date">{{ slot.date }}</div>
-                  <div class="slot-time">{{ slot.time }}</div>
-                  <div class="slot-footer">
-                    @if (isAvailable(slot)) {
-                      <span class="badge badge-open">
-                        {{ seatsLeft(slot) }} seat{{ seatsLeft(slot) !== 1 ? 's' : '' }} left
-                      </span>
-                    } @else {
-                      <span class="badge badge-full">Full</span>
-                    }
-                  </div>
-                </button>
+                @if (!isPastDateTime(slot)) {
+                  <button
+                    class="slot-card"
+                    [class.slot-card--full]="!isAvailable(slot)"
+                    [disabled]="!isAvailable(slot)"
+                    [id]="'slot-card-' + slot.id"
+                    (click)="selectSlot(slot)"
+                  >
+                    <div class="slot-date">{{ slot.date }}</div>
+                    <div class="slot-time">{{ slot.time }}</div>
+                    <div class="slot-footer">
+                      @if (isAvailable(slot)) {
+                        <span class="badge badge-open">
+                          {{ seatsLeft(slot) }} seat{{ seatsLeft(slot) !== 1 ? 's' : '' }} left
+                        </span>
+                      } @else {
+                        <span class="badge badge-full">Full</span>
+                      }
+                    </div>
+                  </button>
+                }
               }
             </div>
           }
@@ -99,16 +102,27 @@
           </div>
 
           <div class="form-group">
-            <label for="customer-contact">Contact</label>
+            <label for="customer-contact">Contact Number</label>
             <input
               id="customer-contact"
               type="text"
+              inputmode="numeric"
               name="contact"
               [(ngModel)]="formContact"
-              placeholder="Phone number or email"
+              (input)="onContactInput()"
+              placeholder="10-digit mobile number"
               required
+              minlength="10"
+              maxlength="10"
+              pattern="\d{10}"
               autocomplete="tel"
+              #contactCtrl="ngModel"
             />
+            @if (contactCtrl.dirty && !contactValid) {
+              <span class="field-error">
+                Please enter a valid 10-digit mobile number.
+              </span>
+            }
           </div>
 
           @if (errorMessage()) {
@@ -121,7 +135,7 @@
             id="confirm-booking-btn"
             type="submit"
             class="btn-primary"
-            [disabled]="isSubmitting() || !formName.trim() || !formContact.trim()"
+            [disabled]="isSubmitting() || !formName.trim() || !contactValid"
           >
             @if (isSubmitting()) {
               <span class="spinner"></span>

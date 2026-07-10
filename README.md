@@ -11,7 +11,7 @@ The application integrates **Firebase Authentication** for secure admin login, *
 ## 🚀 Live Demo
 
 **Application URL:**  
-https://slotwise-b3ed9.web.app/
+https://slotwise-b3ed9.web.app
 
 ---
 
